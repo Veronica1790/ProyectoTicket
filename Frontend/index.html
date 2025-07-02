@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <title>Reparación de Computadoras</title>
+     </head>
+<body>
+     <header>
+        <h1>REGISTRO DE TICKET DE REPARACIÓN</h1>
+       </header> 
+      
+     <main>
+    
+      <div class="cajaticket">
+      <h2> Registro de ticket</h2>
+
+      <form id="formRegistro">
+      <label>Nombre y apellido </label>
+      <input type="text" id="nombre" placeholder="nombre cliente " required> <br>
+      <br>
+      <label> Número de contacto</label>
+      <input type="text" id="contacto" placeholder="" required><br>
+      <br>
+      <label>Modelo de computadora</label>
+      <input type="text" id="compu" placeholder="Modelo de computadora" required><br>
+      <br>
+      <label>Descripción</label>
+      <input type="text" id="descripcion" placeholder="Descripción" required><br>
+      <br>
+      <label>Fecha de ingreso</label>
+      <input type="date" id="fechaingreso" placeholder="Fecha de ingreso" required><br>
+      <br>
+      <button type="submit">Enviar</button>
+     </form>
+      </div>
+      </main>
+
+
+       <script>
+         document.getElementById('formRegistro').addEventListener('submit', async (e) =>
+         { e.preventDefault();  // Manipulación de datos desde el DOM. Extrae los datos del formulario apartir del evento 'SUBMIT'.
+
+
+         //Se guardan en variables los valores, que se extraen con el ID del input. 
+         const nombre = document.getElementById('nombre').value.trim();
+         const contacto = document.getElementById('contacto').value.trim();
+         const compu = document.getElementById('compu').value.trim();
+         const descripcion = document.getElementById('descripcion').value.trim();
+         const fechaingreso= document.getElementById('fechaingreso').value.trim();
+
+         const datos = { nombre, contacto,compu, descripcion }; //Creo un objeto que contiene las propiedades guardadas en las variables antes definidas 
+
+
+         // Validación previa
+         if (!nombre || !contacto || !compu || !descripcion || !descripcion) {
+         alert('Por favor, completá todos los campos.');
+         return;
+         }
+
+         // En el bloque de código Try se aplica la función FETCH para preparar la ruta(URL) para enviar la información al endpoint en el backend. 
+            try {
+            const respuesta = await fetch('/registroTicket', {  
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(datos)
+            });
+
+         if (respuesta.ok) {
+         alert('¡Registro exitoso!');
+         } else {
+         alert('Error al registrar');
+         }
+         } catch (error) {
+         alert('Error de conexión con el servidor');
+         console.error(error);
+         }
+         });
+
+         </script>
+
+
+
+<footer>
+<p>PROYECTO REGISTRO DE TICKETS PARA REPARACIÓN DE PC - COLEGIO PROVINCIAL DR. ERNESTO GUEVARA</p>
+</footer>
+</body>
+</html>
